@@ -17,6 +17,13 @@ AdvertiseCallback callback = new AdvertiseCallback() {
     @Override
     public void onStartSuccess(AdvertiseSettings settingsInEffect) {
         System.out.println("Transmitindo...");
+        @Override
+    public void onStartFailure(int errorCode) {
+        System.out.println("Erro ao transmitir: " + errorCode);
+    }
+};
+
+advertiser.startAdvertising(settings, data, callback);
     }
 
     @Override

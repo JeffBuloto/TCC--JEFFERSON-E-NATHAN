@@ -1,35 +1,78 @@
+MainActivity.java:
+package com.example.tcc; import android.Manifest;
+import android.bluetooth.BluetoothAdapter; import android.bluetooth.le.BluetoothLeScanner; import android.bluetooth.le.ScanCallback; import android.bluetooth.le.ScanResult;
+import android.content.pm.PackageManager; import android.os.Bundle;
+import android.widget.Button; import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity; import androidx.core.app.ActivityCompat;
+import androidx.core.graphics.Insets; import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat; public class MainActivity extends AppCompatActivity {
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); EdgeToEdge.enable(this); setContentView(R.layout.activity_main);
+
+// Ajuste de bordas
+ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+return insets;
+});
+
+// 🔥 BOTÃO
+Button btn = findViewById(R.id.btnConectar); btn.setOnClickListener(v -> {
+ 
 BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-BluetoothLeAdvertiser advertiser = bluetoothAdapter.getBluetoothLeAdvertiser();
 
-AdvertiseSettings settings = new AdvertiseSettings.Builder()
-        .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY)
-        .setConnectable(false)
-        .build();
+if (bluetoothAdapter == null) {
+Toast.makeText(this, "Bluetooth não suportado", Toast.LENGTH_SHORT).show();
+return;
+}
 
-ParcelUuid pUuid = new ParcelUuid(UUID.fromString("0000180D-0000-1000-8000-00805F9B34FB"));
+if (!bluetoothAdapter.isEnabled()) { Toast.makeText(this, "Bluetooth está desligado",
+Toast.LENGTH_SHORT).show();
+return;
+}
 
-AdvertiseData data = new AdvertiseData.Builder()
-        .addServiceUuid(pUuid)
-        .setIncludeDeviceName(true)
-        .build();
+BluetoothLeScanner scanner = bluetoothAdapter.getBluetoothLeScanner();
 
-AdvertiseCallback callback = new AdvertiseCallback() {
-    @Override
-    public void onStartSuccess(AdvertiseSettings settingsInEffect) {
-        System.out.println("Transmitindo...");
-        @Override
-    public void onStartFailure(int errorCode) {
-        System.out.println("Erro ao transmitir: " + errorCode);
-    }
-};
+if (scanner == null) {
+Toast.makeText(this, "Erro ao iniciar scanner", Toast.LENGTH_SHORT).show();
+return;
+}
 
-advertiser.startAdvertising(settings, data, callback);
-    }
+// 🔥 Permissão de localização
+if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+ActivityCompat.requestPermissions(this,
+new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+ 
+1);
+ 
 
-    @Override
-    public void onStartFailure(int errorCode) {
-        System.out.println("Erro ao transmitir: " + errorCode);
-    }
-};
+return;
+}
+ 
 
-advertiser.startAdvertising(settings, data, callback);
+Toast.makeText(this, "Procurando dispositivos...", Toast.LENGTH_SHORT).show();
+
+scanner.startScan(new ScanCallback() { @Override
+public void onScanResult(int callbackType, ScanResult result) { super.onScanResult(callbackType, result);
+
+String nome = null;
+ 
+// 🔥 CORREÇÃO DO ERRO AQUI
+if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) {
+nome = result.getDevice().getName();
+}
+
+if (nome != null) {
+Toast.makeText(MainActivity.this, "Encontrado: " + nome, Toast.LENGTH_SHORT).show();
+}
+ 
+
+
+});
+}
+}
+ 
+}
+});

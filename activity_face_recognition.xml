@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Autenticação Biométrica"
+        android:textSize="20sp"
+        android:layout_marginBottom="20dp"/>
+
+    <ImageView
+        android:id="@+id/faceImageView"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:background="#DDDDDD"
+        android:layout_marginBottom="20dp"
+        android:scaleType="centerCrop"/>
+
+    <Button
+        android:id="@+id/btnCaptureFace"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tirar Foto do Rosto" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="O NFC será liberado após o reconhecimento"
+        android:layout_marginTop="15dp"
+        android:textSize="12sp"
+        android:textColor="#999999"/>
+
+</LinearLayout>

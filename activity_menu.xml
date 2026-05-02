@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:gravity="center"
+    android:background="#F5F5F5">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SISTEMA DE CHAMADA"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:layout_marginBottom="40dp"/>
+
+    <Button
+        android:id="@+id/btnIniciarChamada"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="REGISTRAR PRESENÇA\n(Face + NFC)"
+        android:layout_marginBottom="15dp"
+        android:backgroundTint="#4CAF50"/>
+
+    <Button
+        android:id="@+id/btnBluetooth"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="SCANNER BLUETOOTH\n(Professor)"
+        android:layout_marginBottom="15dp"
+        android:backgroundTint="#2196F3"/>
+
+    <Button
+        android:id="@+id/btnVerPresencas"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="HISTÓRICO DE PRESENÇA"
+        android:backgroundTint="#FF9800"/>
+
+</LinearLayout>
